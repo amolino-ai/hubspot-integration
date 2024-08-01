@@ -17,6 +17,7 @@ def get_all_deals(limit=100):
 
 # This function creates a new deal
 def create_new_deal(properties):
+    properties.pop("last_updated", None)
     try:
         script_deal = SimplePublicObjectInputForCreate(properties=properties)
         return api_client.crm.deals.basic_api.create(simple_public_object_input_for_create=script_deal)
@@ -90,13 +91,15 @@ def main():
         print_deals(all_deals)
 
         new_deal_properties = {
-            "amount": "2000",
+            "amount": "3000",
             "closedate": "2024-09-30",
-            "dealname": "Script-deal",
+            "dealname": "Script-deal2",
             "dealstage": "contractsent",
+            "last_updated": "2024-8-1"
         }
         
         existing_deal = find_deal_by_name(new_deal_properties.get("dealname"))
+        
         if existing_deal is None:
             new_deal = create_new_deal(new_deal_properties)
             if new_deal:
@@ -109,7 +112,6 @@ def main():
                 print(updated_deal.properties)
 
         test_deal = find_deal_by_name("Test-Deal")
-        # print(test_deal)
         
         if test_deal:
             updated_properties = {
