@@ -1,0 +1,6 @@
+fastapi
+hubspot-api-client
+pydantic
+python-dateutil
+pytz
+uvicorn
